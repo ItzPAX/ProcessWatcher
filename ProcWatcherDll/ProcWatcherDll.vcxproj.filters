@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Ressourcendateien">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="hooklib">
+      <UniqueIdentifier>{16cdaceb-f7f4-4092-865c-78e8ac0fee0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hooks">
+      <UniqueIdentifier>{96cb83fb-0069-4321-9eff-84041e99e29e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="communication">
+      <UniqueIdentifier>{5ce46381-a28c-437d-a217-d9b2f94d7363}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="hooklib.cpp">
+      <Filter>hooklib</Filter>
+    </ClCompile>
+    <ClCompile Include="hooks.hpp">
+      <Filter>hooks</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="hooklib.h">
+      <Filter>hooklib</Filter>
+    </ClInclude>
+    <ClInclude Include="communication.hpp">
+      <Filter>communication</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

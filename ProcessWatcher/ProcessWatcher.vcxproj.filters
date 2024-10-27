@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Ressourcendateien">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="imgui">
+      <UniqueIdentifier>{ed6359b5-684d-4427-b8ed-a1c093a7c1c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui">
+      <UniqueIdentifier>{58deab11-6043-45f5-b48c-ddf8a0010bff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Win32">
+      <UniqueIdentifier>{9846d94a-54d3-413c-b202-86f43a4bc409}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="communication">
+      <UniqueIdentifier>{f6be26f9-591d-4bb6-a0cb-bd7292bdba1f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\empax\EmPax\EmPax\imgui\imconfig.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\empax\EmPax\EmPax\imgui\imgui.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\empax\EmPax\EmPax\imgui\imgui_impl_dx9.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\empax\EmPax\EmPax\imgui\imgui_impl_win32.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\empax\EmPax\EmPax\imgui\imgui_internal.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\empax\EmPax\EmPax\imgui\imstb_rectpack.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\empax\EmPax\EmPax\imgui\imstb_textedit.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\empax\EmPax\EmPax\imgui\imstb_truetype.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="includes.h" />
+    <ClInclude Include="ui\ui.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Win32\w32Caption.h">
+      <Filter>Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="Win32\w32SubObject.h">
+      <Filter>Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="Win32\w32Win32Utils.h">
+      <Filter>Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="Win32\w32Window.h">
+      <Filter>Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="Win32\w32WinEntry.h">
+      <Filter>Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="communication.hpp">
+      <Filter>communication</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\empax\EmPax\EmPax\imgui\imgui_tables.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\empax\EmPax\EmPax\imgui\imgui.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\empax\EmPax\EmPax\imgui\imgui_demo.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\empax\EmPax\EmPax\imgui\imgui_draw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\empax\EmPax\EmPax\imgui\imgui_impl_dx9.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\empax\EmPax\EmPax\imgui\imgui_impl_win32.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\empax\EmPax\EmPax\imgui\imgui_widgets.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ui\ui.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Win32\w32Caption.cpp">
+      <Filter>Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="Win32\w32SubObject.cpp">
+      <Filter>Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="Win32\w32Win32Utils.cpp">
+      <Filter>Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="Win32\w32Window.cpp">
+      <Filter>Win32</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
