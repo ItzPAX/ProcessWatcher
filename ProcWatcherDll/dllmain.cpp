@@ -4,7 +4,10 @@
 void main()
 {
     comm::init();
-    sys_hooks::install_hooks();
+
+    static HookLib hl;
+    comm::write_import_data(hl);
+    sys_hooks::install_hooks(hl);
 }
 
 BOOL APIENTRY DllMain( HMODULE hModule,

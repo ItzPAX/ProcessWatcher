@@ -39,10 +39,9 @@ namespace hk_functions
 
 namespace sys_hooks
 {
-    static HookLib hl;
     static std::vector<HOOK_DATA> data;
 
-    static void install_hooks()
+    static void install_hooks(HookLib hl)
     {
         data.push_back({ "MessageBoxA" , (void*)hk_functions::hk_MessageBoxA });
         data.push_back({ "Sleep" , (void*)hk_functions::hk_Sleep });

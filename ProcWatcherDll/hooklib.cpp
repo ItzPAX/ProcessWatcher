@@ -1,4 +1,5 @@
 #include "hooklib.h"
+#include "communication.hpp"
 
 HookLib::HookLib()
 {
@@ -32,8 +33,6 @@ void HookLib::InstallHooks(std::vector<HOOK_DATA> data)
 				{
 					functionName = (PIMAGE_IMPORT_BY_NAME)((DWORD_PTR)imageBase + originalFirstThunk->u1.AddressOfData);
 
-					printf("%s, %s, %d\n", functionName->Name, hk.name.c_str(), strcmp(functionName->Name, hk.name.c_str()));
-
 					// find function
 					if (std::string(functionName->Name).compare(hk.name) == 0)
 					{
@@ -47,6 +46,48 @@ void HookLib::InstallHooks(std::vector<HOOK_DATA> data)
 
 				++originalFirstThunk;
 				++firstThunk;
+			}
+		}
+
+		importDescriptor++;
+	}
+}
+
+void HookLib::FillImportData(ImportInfo* info, int& import_count)
+{
+	PIMAGE_IMPORT_BY_NAME functionName = NULL;
+	LPCSTR libraryName = NULL;
+
+	while (importDescriptor->Name != NULL)
+	{
+		libraryName = (LPCSTR)importDescriptor->Name + (DWORD_PTR)imageBase;
+		HMODULE library = LoadLibraryA(libraryName);
+
+		if (library)
+		{
+			PIMAGE_THUNK_DATA originalFirstThunk = NULL, firstThunk = NULL;
+			originalFirstThunk = (PIMAGE_THUNK_DATA)((DWORD_PTR)imageBase + importDescriptor->OriginalFirstThunk);
+			firstThunk = (PIMAGE_THUNK_DATA)((DWORD_PTR)imageBase + importDescriptor->FirstThunk);
+
+			while (originalFirstThunk->u1.AddressOfData != NULL)
+			{
+				functionName = (PIMAGE_IMPORT_BY_NAME)((DWORD_PTR)imageBase + originalFirstThunk->u1.AddressOfData);
+
+				if (import_count < 1024)
+				{
+					ImportInfo i;
+					memcpy(i.module_name, libraryName, strlen(libraryName));
+					memcpy(i.name, functionName->Name, strlen(functionName->Name));
+					info[import_count] = i;
+				}
+				else
+				{
+					return;
+				}
+
+				++originalFirstThunk;
+				++firstThunk;
+				++import_count;
 			}
 		}
 

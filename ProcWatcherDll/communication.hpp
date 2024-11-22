@@ -3,12 +3,23 @@
 #include <string>
 #include <type_traits>
 #include <windows.h>
+#include "hooklib.h"
+
+struct ImportInfo
+{
+    char name[256];
+    char module_name[256];
+};
 
 namespace comm
 {
     struct SharedData {
         volatile LONG readyFlag;  // 0 = not ready, 1 = ready
+        volatile LONG importsReady; // 0 = not ready, 1 = ready
         char data[1024];          // String data
+
+        ImportInfo imports[1024];
+        int import_count;
     };
 
     static SharedData* pBuf;
@@ -18,7 +29,9 @@ namespace comm
         HANDLE hMapFile = OpenFileMapping(FILE_MAP_ALL_ACCESS, FALSE, L"ProcWatchSharedMem");
         if (hMapFile)
         {
-            pBuf = (SharedData*)MapViewOfFile(hMapFile, FILE_MAP_ALL_ACCESS, 0, 0, 1024);
+            pBuf = (SharedData*)MapViewOfFile(hMapFile, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(SharedData));
+
+            pBuf->import_count = 0;
         }
     }
 
@@ -26,6 +39,12 @@ namespace comm
     {
         CopyMemory((PVOID)pBuf->data, data.c_str(), strlen(data.c_str()) + 1);
         InterlockedExchange(&pBuf->readyFlag, 1);
+    }
+
+    static void write_import_data(HookLib hl)
+    {
+        hl.FillImportData(pBuf->imports, pBuf->import_count);
+        InterlockedExchange(&pBuf->importsReady, 1);
     }
 }
 

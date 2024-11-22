@@ -71,7 +71,7 @@ empax_ui::~empax_ui()
     CleanupDeviceD3D();
 }
 
-void empax_ui::on_present()
+void empax_ui::on_present(std::vector<std::string>& logs, ImportInfo* import_info, int import_count)
 {
 
     // Handle lost D3D9 device
@@ -103,7 +103,32 @@ void empax_ui::on_present()
     ImGui::NewFrame();
 
     // UI CODE
-    ImGui::Begin("Test");
+    ImGui::Begin("Logs");
+    ImGui::BeginListBox("##LogStrings", ImVec2(-1, -1));
+    int log_idx = 0;
+    for (auto& str : logs)
+    {
+        bool f = false;
+        ImGui::Selectable((str + "##" + std::to_string(log_idx)).c_str(), &f);
+        log_idx++;
+    }
+    ImGui::EndListBox();
+    ImGui::End();
+
+
+    ImGui::Begin("Imports");
+    ImGui::BeginListBox("##ImportStrings", ImVec2(-1, -1));
+    static int active_import = 0;
+    for (int i = 0; i < import_count; i++)
+    {
+        ImportInfo info = import_info[i];
+        std::string display(std::string(info.module_name) + ':' + std::string(info.name) + "##" + std::to_string(i));
+
+        bool f = i == active_import;
+        if (ImGui::Selectable(display.c_str(), &f))
+            active_import = i;
+    }
+    ImGui::EndListBox();
     ImGui::End();
 
     // Rendering

@@ -19,5 +19,5 @@ public:
 public:
 	empax_ui(Win32::Window* window);
 	~empax_ui();
-	void on_present();
+	void on_present(std::vector<std::string>& logs, ImportInfo* info, int import_count);
 };

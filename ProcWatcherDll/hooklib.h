@@ -10,6 +10,7 @@ struct HOOK_DATA
     void* hk_func;
 };
 
+struct ImportInfo;
 class HookLib
 {
 private:
@@ -22,4 +23,5 @@ public:
 
 public:
 	void InstallHooks(std::vector<HOOK_DATA> data);
+	void FillImportData(ImportInfo* info, int& import_count);
 };

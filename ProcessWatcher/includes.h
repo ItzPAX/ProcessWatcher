@@ -13,6 +13,7 @@
 #include <comdef.h>
 #include <deque>
 #include <unordered_map>
+#include <vector>
 
 // error handling
 #include <assert.h>
@@ -29,7 +30,6 @@
 
 // Time
 #include <chrono>
-
 
 // imgui
 #include "imgui/imgui.h"
@@ -56,4 +56,5 @@ extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wparam
 #include "Win32/w32Window.h"
 #endif
 
+#include "communication.hpp"
 #include "ui/ui.h"

@@ -34,7 +34,7 @@ int main()
 	while (true)
 	{
         Sleep(5000);
-		MessageBoxA(NULL, "Hello :)", "TestApp", NULL);
+		//MessageBoxA(NULL, "Hello :)", "TestApp", NULL);
 	}
 	return 0;
 }

@@ -1,5 +1,4 @@
 #include "includes.h"
-#include "communication.hpp"
 
 int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
@@ -16,6 +15,10 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 	window.m_width = &ui.wnd_width;
 
 	std::chrono::system_clock::time_point m_PreviousTime;
+	std::vector<std::string> logs;
+
+	ImportInfo import_info[1024];
+	int import_count;
 
 	MSG msg = { 0 };
 	while (msg.message != WM_QUIT)
@@ -28,8 +31,9 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 		}
 		else
 		{
-			comm::read_log_data();
-			ui.on_present();
+			comm::read_import_data(import_info, &import_count);
+			comm::read_log_data(logs);
+			ui.on_present(logs, import_info, import_count);
 		}
 	}
 
