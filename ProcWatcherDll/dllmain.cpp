@@ -3,11 +3,22 @@
 
 void main()
 {
-    comm::init();
+    comm.init();
 
     static HookLib hl;
-    comm::write_import_data(hl);
+    comm.write_import_data(hl);
     sys_hooks::install_hooks(hl);
+
+    // wait for hook commands
+    while (true)
+    {
+        if (comm.pBuf->hookReady)
+        {
+            
+        }
+    
+        Sleep(1);
+    }
 }
 
 BOOL APIENTRY DllMain( HMODULE hModule,

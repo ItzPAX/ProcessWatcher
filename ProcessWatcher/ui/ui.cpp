@@ -71,7 +71,7 @@ empax_ui::~empax_ui()
     CleanupDeviceD3D();
 }
 
-void empax_ui::on_present(std::vector<std::string>& logs, ImportInfo* import_info, int import_count)
+void empax_ui::on_present(std::vector<std::string>& logs, ImportInfo* import_info, int import_count, communication& comm)
 {
 
     // Handle lost D3D9 device
@@ -117,7 +117,8 @@ void empax_ui::on_present(std::vector<std::string>& logs, ImportInfo* import_inf
 
 
     ImGui::Begin("Imports");
-    ImGui::BeginListBox("##ImportStrings", ImVec2(-1, -1));
+    ImVec2 ImSize = ImGui::GetWindowSize();
+    ImGui::BeginListBox("##ImportStrings", ImVec2(ImSize.x / 2, -1));
     static int active_import = 0;
     for (int i = 0; i < import_count; i++)
     {
@@ -129,6 +130,29 @@ void empax_ui::on_present(std::vector<std::string>& logs, ImportInfo* import_inf
             active_import = i;
     }
     ImGui::EndListBox();
+    ImGui::SameLine();
+    ImGui::BeginChild(1, ImVec2(-1, -1));
+    static const char* return_items = "U32\0U64\0S32\0S64\0F32\0F64\0Pointer\0Void\0";
+    ImGui::Text("Return Type:");
+    ImGui::Combo("Return Type", (int*)&func_return[import_info[active_import].name], return_items);
+
+    static const char* param_items = "U32\0U64\0S32\0S64\0F32\0F64\0Pointer\0";
+    ImGui::Text("Function Params:");
+    for (int i = 0; i < func_args[import_info[active_import].name].size(); i++)
+    {
+        std::string combo_name("Param " + std::to_string(i));
+        ImGui::Combo(combo_name.c_str(), (int*)&func_args[import_info[active_import].name][i], param_items);
+    }
+    if (ImGui::Button("+"))
+    {
+        func_args[import_info[active_import].name].push_back(U32);
+    }
+
+    if (ImGui::Button("Hook Import"))
+    {
+        comm.write_hook_data(import_info[active_import].name, func_return[import_info[active_import].name], func_args[import_info[active_import].name].data(), func_args[import_info[active_import].name].size());
+    }
+    ImGui::EndChild();
     ImGui::End();
 
     // Rendering

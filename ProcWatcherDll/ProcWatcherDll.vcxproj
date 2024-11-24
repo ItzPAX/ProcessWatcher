@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClInclude Include="communication.hpp" />
     <ClInclude Include="hooklib.h" />
+    <ClInclude Include="includes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

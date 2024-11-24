@@ -31,5 +31,6 @@
     <ClInclude Include="communication.hpp">
       <Filter>communication</Filter>
     </ClInclude>
+    <ClInclude Include="includes.h" />
   </ItemGroup>
 </Project>

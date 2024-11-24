@@ -56,5 +56,15 @@ extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wparam
 #include "Win32/w32Window.h"
 #endif
 
+enum ARG_TYPES : int
+{
+	U32 = 0,
+	U64,
+	S32,
+	S64,
+	F32,
+	F64
+};
+
 #include "communication.hpp"
 #include "ui/ui.h"

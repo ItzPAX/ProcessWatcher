@@ -1,5 +1,4 @@
-#include "hooklib.h"
-#include "communication.hpp"
+#include "includes.h"
 
 HookLib::HookLib()
 {
@@ -11,7 +10,7 @@ HookLib::HookLib()
 	importDescriptor = (PIMAGE_IMPORT_DESCRIPTOR)(importsDirectory.VirtualAddress + (DWORD_PTR)imageBase);
 }
 
-void HookLib::InstallHooks(std::vector<HOOK_DATA> data)
+void HookLib::InstallHook(std::string func_name, void* new_func, void** orig)
 {
 	PIMAGE_IMPORT_BY_NAME functionName = NULL;
 	LPCSTR libraryName = NULL;
@@ -29,19 +28,17 @@ void HookLib::InstallHooks(std::vector<HOOK_DATA> data)
 
 			while (originalFirstThunk->u1.AddressOfData != NULL)
 			{
-				for (auto& hk : data)
-				{
-					functionName = (PIMAGE_IMPORT_BY_NAME)((DWORD_PTR)imageBase + originalFirstThunk->u1.AddressOfData);
+				functionName = (PIMAGE_IMPORT_BY_NAME)((DWORD_PTR)imageBase + originalFirstThunk->u1.AddressOfData);
 
-					// find function
-					if (std::string(functionName->Name).compare(hk.name) == 0)
-					{
-						SIZE_T bytesWritten = 0;
-						DWORD oldProtect = 0;
-						VirtualProtect((LPVOID)(&firstThunk->u1.Function), 8, PAGE_READWRITE, &oldProtect);
-						firstThunk->u1.Function = (DWORD_PTR)hk.hk_func;	// swap to new pointer
-						VirtualProtect((LPVOID)(&firstThunk->u1.Function), 8, oldProtect, &oldProtect);
-					}
+				// find function
+				if (std::string(functionName->Name).compare(func_name) == 0)
+				{
+					SIZE_T bytesWritten = 0;
+					DWORD oldProtect = 0;
+					VirtualProtect((LPVOID)(&firstThunk->u1.Function), 8, PAGE_READWRITE, &oldProtect);
+					*orig = (void*)firstThunk->u1.Function;
+					firstThunk->u1.Function = (DWORD_PTR)new_func;	// swap to new pointer
+					VirtualProtect((LPVOID)(&firstThunk->u1.Function), 8, oldProtect, &oldProtect);
 				}
 
 				++originalFirstThunk;
@@ -73,9 +70,11 @@ void HookLib::FillImportData(ImportInfo* info, int& import_count)
 			{
 				functionName = (PIMAGE_IMPORT_BY_NAME)((DWORD_PTR)imageBase + originalFirstThunk->u1.AddressOfData);
 
-				if (import_count < 1024)
+				if (import_count < 1000)
 				{
 					ImportInfo i;
+					RtlZeroMemory(i.module_name, sizeof(i.module_name));
+					RtlZeroMemory(i.name, sizeof(i.name));
 					memcpy(i.module_name, libraryName, strlen(libraryName));
 					memcpy(i.name, functionName->Name, strlen(functionName->Name));
 					info[import_count] = i;

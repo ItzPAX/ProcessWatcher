@@ -1,9 +1,5 @@
 #pragma once
 
-#include <Windows.h>
-#include <unordered_map>
-#include <string>
-
 struct HOOK_DATA
 {
     std::string name;
@@ -22,6 +18,6 @@ public:
 	~HookLib() = default;
 
 public:
-	void InstallHooks(std::vector<HOOK_DATA> data);
+	void InstallHook(std::string func_name, void* new_func, void** orig);
 	void FillImportData(ImportInfo* info, int& import_count);
 };

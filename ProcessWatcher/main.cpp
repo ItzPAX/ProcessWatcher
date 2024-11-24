@@ -2,7 +2,9 @@
 
 int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 {
-	comm::init();
+	static communication comm;
+
+	comm.init();
 	Win32::Window window(L"ProcessWatcher", NULL);
 
 	// create window
@@ -17,7 +19,7 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 	std::chrono::system_clock::time_point m_PreviousTime;
 	std::vector<std::string> logs;
 
-	ImportInfo import_info[1024];
+	ImportInfo import_info[1000];
 	int import_count;
 
 	MSG msg = { 0 };
@@ -31,9 +33,9 @@ int CALLBACK WinMain(HINSTANCE, HINSTANCE, LPSTR, INT)
 		}
 		else
 		{
-			comm::read_import_data(import_info, &import_count);
-			comm::read_log_data(logs);
-			ui.on_present(logs, import_info, import_count);
+			comm.read_import_data(import_info, &import_count);
+			comm.read_log_data(logs);
+			ui.on_present(logs, import_info, import_count, comm);
 		}
 	}
 
